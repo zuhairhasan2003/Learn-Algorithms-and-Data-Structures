@@ -194,7 +194,38 @@ class Node{
         cout << "Lowest common ancestor of " << p << " and " << q << " is : "  << lowestCommonAncestor(node, p , q)->val << endl;
     }
 
+    void PrintPaths(Node * node)
+    {
+        vector<int> path;
+        printPaths(node, path);
+    }
+
     private:
+
+    void printPaths(Node * node, vector<int> & path)
+    {
+        if(node == NULL)
+            return;
+            
+        path.push_back(node->val);
+        
+        if(node->left == NULL && node->right == NULL)
+        {
+            cout << "PATH FOUND : ";
+            for (int  i = 0; i < path.size(); i++)
+            {
+                cout << path[i] << "         ";
+            }
+            cout << endl;
+        }
+        else
+        {
+            printPaths(node->left, path);
+            printPaths(node->right, path);
+        }
+
+        path.pop_back();
+    }
 
     Node * lowestCommonAncestor(Node * node, int p, int q)
     {
@@ -300,6 +331,8 @@ int main()
     cout << endl;
 
     root5->LowestCommonAncestor(root5, 6, 9);
+
+    root5->PrintPaths(root5);
 
     return 0;
 }
