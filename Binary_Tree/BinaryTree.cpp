@@ -3,6 +3,7 @@
 #include<queue>
 #include<stack>
 #include<algorithm>
+#include<cmath>
 using namespace std;
 
 class Node{
@@ -200,6 +201,44 @@ class Node{
         printPaths(node, path);
     }
 
+    void MaxWidth(Node * node)
+    {
+        queue<pair<Node*, int>> toVisit;
+
+        int maxWidth = 0;
+
+        toVisit.push({node, 0});
+        
+        while(toVisit.size() > 0)
+        {
+            int qSize = toVisit.size();
+            int minIndex = toVisit.front().second;
+            int maxIndex = toVisit.back().second;
+
+            if(maxWidth < ((maxIndex - minIndex) + 1))
+                maxWidth  = ((maxIndex - minIndex) + 1);
+            
+            for(int i = 0 ; i < qSize; i++)
+            {
+                pair<Node*, int> p = toVisit.front();
+                
+                if(p.first->left != NULL)
+                {
+                    toVisit.push({p.first->left, ((p.second*2)+1)});
+                }
+                
+                if(p.first->right != NULL)
+                {
+                    toVisit.push({p.first->right, ((p.second*2)+2)});
+                }
+
+                toVisit.pop();
+            }
+        }
+
+        cout << "Max width of the tree is : " << maxWidth << endl;
+    }
+
     private:
 
     void printPaths(Node * node, vector<int> & path)
@@ -333,6 +372,8 @@ int main()
     root5->LowestCommonAncestor(root5, 6, 9);
 
     root5->PrintPaths(root5);
+
+    root5->MaxWidth(root5);
 
     return 0;
 }
