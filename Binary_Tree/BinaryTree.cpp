@@ -239,6 +239,47 @@ class Node{
         cout << "Max width of the tree is : " << maxWidth << endl;
     }
 
+    void MorrisInorder(Node * node)      // Time complexity = O(N)
+    {
+        cout << "In Order Morris Inorder" << endl;
+
+        Node * currNode = node;
+
+        while (currNode != NULL)
+        {       
+            if(currNode->left == NULL)
+            {
+                // move right
+                cout << currNode->val << "    ";
+                currNode = currNode->right;
+            }
+            else
+            {
+                Node * prev = currNode->left;
+                while (prev->right != NULL && prev->right != currNode)
+                {
+                    prev = prev->right;
+                }
+                
+                if(prev->right == NULL)
+                {
+                    // move left
+                    prev->right = currNode;
+                    currNode = currNode->left;
+                }
+                else
+                {
+                    // move right
+                    prev->right = NULL;
+                    cout << currNode->val << "    ";
+                    currNode = currNode->right;
+                }
+            }
+        }   
+
+        cout << endl;
+    }
+
     private:
 
     void printPaths(Node * node, vector<int> & path)
@@ -374,6 +415,8 @@ int main()
     root5->PrintPaths(root5);
 
     root5->MaxWidth(root5);
+
+    root5->MorrisInorder(root5);
 
     return 0;
 }
