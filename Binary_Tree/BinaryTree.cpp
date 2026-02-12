@@ -280,7 +280,35 @@ class Node{
         cout << endl;
     }
 
+    void FlattenToLinkedList(Node * node)
+    {
+        Node * nextRight = NULL;
+        flattenToLinkedList(node, nextRight);
+
+        nextRight = node;
+        cout << "Printing linkedList : " << endl;
+        while (nextRight != NULL)
+        {
+            cout << nextRight->val << "      ";
+            nextRight = nextRight->right;
+        }
+        cout << endl;
+    }
+
     private:
+
+    void flattenToLinkedList(Node * node, Node *& nextRight) // *& means passing the exact pointer location instead of making replica of pointer
+    {
+        if(node == NULL)
+            return;
+
+        flattenToLinkedList(node->right, nextRight);
+        flattenToLinkedList(node->left, nextRight);
+
+        node->left = NULL;
+        node->right = nextRight;
+        nextRight = node; // we need *& for this assignment
+    }
 
     void printPaths(Node * node, vector<int> & path)
     {
@@ -417,6 +445,8 @@ int main()
     root5->MaxWidth(root5);
 
     root5->MorrisInorder(root5);
+
+    root->FlattenToLinkedList(root);
 
     return 0;
 }
