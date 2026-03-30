@@ -56,7 +56,62 @@ class BinarySearchTree
         }
     }
 
+    void Remove(int toRemove)
+    {
+        head = remove(head, toRemove);
+    }
+
     private:
+
+    Node * remove(Node * node, int toRemove)
+    {
+        if(node == NULL)
+        {
+            return NULL;
+        }
+
+        if(node->val == toRemove)
+        {
+            if(node->left == NULL && node->right == NULL)
+            {
+                delete node;
+                return NULL;
+            }
+            else if (node->left == NULL)
+            {
+                delete node;
+                return node->right;
+            }
+            else if(node->right == NULL)
+            {
+                delete node;
+                return node->left;
+            }
+            else
+            {
+                Node * temp = node->left;
+                while (temp->right != NULL)
+                {
+                    temp = temp->right;
+                }
+                node->val = temp->val;
+
+                node->left = remove(node->left, temp->val);
+
+                return node;
+            }
+        }
+        else if(node->val > toRemove)
+        {
+            node->left = remove(node->left, toRemove);
+        }
+        else
+        {
+            node->right = remove(node->right, toRemove);
+        }
+
+        return node;
+    }
 
     Node * search(Node * node, int toFind)
     {
@@ -114,14 +169,19 @@ int main()
 {
     BinarySearchTree tree;
 
-    int arr [] = {2,3,1,4,5,6};
+    int arr [] = {3,2,1,5,4,6};
 
     tree.Build(arr , sizeof(arr) / sizeof(int));
-
+    
+    cout << "Before removing : " << endl;
     tree.InOrder();
-
+    tree.Remove(5);
+    cout << "After removing : " << endl;
+    tree.InOrder();
+    
     tree.Search(10);
     tree.Search(2);
+
 
     return 0;
 }
