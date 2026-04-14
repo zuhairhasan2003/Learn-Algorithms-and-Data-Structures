@@ -5,7 +5,7 @@ using namespace std;
 // First we check what side (left or right) is sorted size
 // Then we see is the target lies within the range of sorted array, if not then we do binary search for non sorted array
 
-int RotatedSortedArray(int * arr, size_t size, int target)
+int RotatedSortedArray(int * arr, size_t size, int target)   // Time complexiry : O(log n)
 {
     int index = -1;
 
