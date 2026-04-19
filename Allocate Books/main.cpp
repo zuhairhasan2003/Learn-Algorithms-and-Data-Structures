@@ -74,8 +74,10 @@ bool IsValid(vector<int> & books, int numStudents, int maxPages) // Time comp : 
         {
             numStudents --;
             sum = 0;
+            sum += books[i];
             if(numStudents <= 0)
                 return false;
+            continue;
         }
         sum += books[i];
     }
