@@ -9,6 +9,8 @@ using namespace std;
         emplace_back will create a object (if not already created) for you as well as push it
 
         vec.push_back("Alice", 20);   => will give error as obj is not created!
+        vec.push_back({"Alice", 20});   => will work!
+
 */
 
 int main()
