@@ -58,6 +58,8 @@ vector<vector<int>> threeSum_2(vector<int>& nums) {
             else if(nums[i]+nums[j]+nums[k] < 0)
             {
                 j++;
+                while(j < k && nums[j] == nums[j-1]) 
+                    j++;
             }
             else
             {
