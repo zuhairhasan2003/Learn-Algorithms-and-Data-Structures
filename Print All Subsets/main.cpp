@@ -37,7 +37,7 @@ void PrintArr(vector<int>& arr)
     cout << endl;
 }
 
-void PrintAllSubArrays(vector<int>& arr, int i, vector<int>& currArr)
+void PrintAllSubSets(vector<int>& arr, int i, vector<int>& currArr)
 {
     if(arr.size() == i)
     {
@@ -45,10 +45,10 @@ void PrintAllSubArrays(vector<int>& arr, int i, vector<int>& currArr)
         return;
     }
 
-    PrintAllSubArrays(arr, i + 1, currArr);
+    PrintAllSubSets(arr, i + 1, currArr);
 
     currArr.push_back(arr[i]);
-    PrintAllSubArrays(arr, i + 1, currArr);
+    PrintAllSubSets(arr, i + 1, currArr);
     currArr.pop_back();
 }
 
@@ -56,6 +56,6 @@ int main()
 {
     vector<int> arr = {1, 2, 3};
     vector<int> currArr = {};
-    PrintAllSubArrays(arr, 0, currArr);
+    PrintAllSubSets(arr, 0, currArr);
     return 0;
 }
