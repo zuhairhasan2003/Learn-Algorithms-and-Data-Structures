@@ -114,6 +114,25 @@ public:
         newNode->next = tmp->next;
         tmp->next = newNode;
     }
+
+    void reverse() // Time complexity : O(N)
+    {
+        Node * curr = this->head;
+        Node * prev = NULL;
+        Node * next = NULL;
+
+        this->tail = this->head;
+
+        while (curr != NULL)
+        {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        this->head = prev;
+    }
 };
 
 int main()
@@ -126,11 +145,12 @@ int main()
     list.pushBack(3);
     list.pushBack(4);
 
-    list.insert(100, 2);
+    cout << "Linked list before reversal : ";
+    list.print();
 
-    list.popFront();
-    list.popBack();
+    list.reverse();
 
+    cout << "Linked list after reversal : ";
     list.print();
     
     return 0;
