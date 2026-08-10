@@ -133,6 +133,20 @@ public:
 
         this->head = prev;
     }
+
+    Node* findMiddle()  // Time complexity : O(N)
+    {
+        Node * fastPtr = this->head;
+        Node * slowPtr = this->head;
+
+        while(fastPtr != NULL && fastPtr->next != NULL)
+        {
+            fastPtr = fastPtr->next->next;
+            slowPtr = slowPtr->next;
+        }
+
+        return slowPtr;
+    }
 };
 
 int main()
@@ -144,14 +158,11 @@ int main()
 
     list.pushBack(3);
     list.pushBack(4);
+    list.pushBack(5);
 
-    cout << "Linked list before reversal : ";
     list.print();
 
-    list.reverse();
-
-    cout << "Linked list after reversal : ";
-    list.print();
+    cout << "Middle of linkedlist : " << list.findMiddle()->val << endl;
     
     return 0;
 }
