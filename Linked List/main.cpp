@@ -202,24 +202,57 @@ public:
         fastPrev->next = NULL;
         tail = fastPrev;
     }
+
+    void mergeToList ( Node * head2 ) {
+        this->head = mergeToListWrapper(this->head, head2);
+
+        tail = head;
+        while ( tail != NULL && tail->next != NULL ) {
+            tail = tail->next;
+        }
+    }
+
+    Node* mergeToListWrapper ( Node * head1, Node * head2 ) {
+        if ( head1 == NULL ) {
+            return head2;
+        }
+        else if ( head2 == NULL ) {
+            return head1;
+        }
+
+        if ( head1->val < head2->val ) {
+            head1->next = mergeToListWrapper(head1->next, head2);
+            return head1;
+        }
+        else {
+            head2->next = mergeToListWrapper(head1, head2->next);
+            return head2;
+        }
+    } 
 };
 
 int main()
 {
     List list;
 
-    list.pushFront(2);
-    list.pushFront(1);
-
+    list.pushBack(1);
     list.pushBack(3);
-    list.pushBack(4);
     list.pushBack(5);
 
+    cout << "List 1 : ";
     list.print();
 
-    list.createLinkTo(1);
-    list.findAndRemoveCycle();
+    List list2;
+    list2.pushBack(2);
+    list2.pushBack(4);
+    list2.pushBack(6);
 
+    cout << "List 2 : ";
+    list2.print();
+
+    list.mergeToList(list2.head);
+
+    cout << "List after merge : ";
     list.print();
 
     return 0;
