@@ -147,6 +147,42 @@ public:
 
         return slowPtr;
     }
+
+    void createLinkTo ( int to ) {
+        Node * toPtr = head;
+
+        while ( toPtr != NULL ) {
+            if ( toPtr->val == to ) {
+                break;
+            }
+            toPtr = toPtr->next;
+        }
+        
+        /*
+            * Case when no "to" Node is found
+            */
+        if ( toPtr == NULL ) {
+            return;
+        }
+
+        tail->next = toPtr;
+    }
+
+    bool hasCycle () {
+        Node * fast = head;
+        Node * slow = head;
+
+        while ( fast != NULL && fast->next != NULL ) {
+            slow = slow->next;
+            fast = fast->next->next;
+
+            if ( fast == slow ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 };
 
 int main()
@@ -162,7 +198,10 @@ int main()
 
     list.print();
 
-    cout << "Middle of linkedlist : " << list.findMiddle()->val << endl;
-    
+    list.createLinkTo(3);
+    cout << (list.hasCycle() ? "Cycle Found!" : 
+            "No Cycle Found!") << endl;
+
     return 0;
+
 }
