@@ -168,7 +168,7 @@ public:
         tail->next = toPtr;
     }
 
-    bool hasCycle () {
+    void findAndRemoveCycle () {
         Node * fast = head;
         Node * slow = head;
 
@@ -177,11 +177,30 @@ public:
             fast = fast->next->next;
 
             if ( fast == slow ) {
-                return true;
+                cout << "Cycle Found" << endl;
+                fast = head;
+                break;
             }
         }
 
-        return false;
+        if( fast == NULL || fast->next == NULL ) {
+            cout << "No cycle found" << endl;
+            return;
+        }
+
+        while ( fast != slow ) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        Node * fastPrev = fast;
+        while ( fastPrev->next != fast ) {
+            fastPrev = fastPrev->next;
+        }
+
+        cout << "Cycle Removed" << endl;
+        fastPrev->next = NULL;
+        tail = fastPrev;
     }
 };
 
@@ -198,9 +217,10 @@ int main()
 
     list.print();
 
-    list.createLinkTo(3);
-    cout << (list.hasCycle() ? "Cycle Found!" : 
-            "No Cycle Found!") << endl;
+    list.createLinkTo(1);
+    list.findAndRemoveCycle();
+
+    list.print();
 
     return 0;
 
